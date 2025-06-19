@@ -10,7 +10,7 @@ public static class MassTransitExtensions
     {
         services.AddMassTransit(x =>
         {
-            x.AddConsumer<OrderCreatedEventConsumer>();
+            x.AddConsumer<OrderPaidEventConsumer>();
 
             x.UsingRabbitMq((context, cfg) =>
             {
@@ -20,9 +20,9 @@ public static class MassTransitExtensions
                     h.Password("guest");
                 });
 
-                cfg.ReceiveEndpoint("order-created-event-queue", e =>
+                cfg.ReceiveEndpoint("order-paid-event-queue", e =>
                 {
-                    e.ConfigureConsumer<OrderCreatedEventConsumer>(context);
+                    e.ConfigureConsumer<OrderPaidEventConsumer>(context);
                 });
             });
         });
