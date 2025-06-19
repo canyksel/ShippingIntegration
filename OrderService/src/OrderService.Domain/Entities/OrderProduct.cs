@@ -6,11 +6,8 @@ public class OrderProduct : EntityBase<Guid>
 {
     public int Quantity { get; private set; }
     public decimal UnitPrice { get; private set; }
-
-
     public Guid OrderId { get; private set; }
     public virtual Order Order { get; private set; }
-
     public Guid ProductId { get; private set; }
     public virtual Product Product { get; private set; }
 
@@ -29,4 +26,10 @@ public class OrderProduct : EntityBase<Guid>
     }
 
     public decimal TotalPrice => UnitPrice * Quantity;
+
+    public void SetOrder(Order order)
+    {
+        Order = order;
+        OrderId = order.Id;
+    }
 }

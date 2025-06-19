@@ -23,9 +23,9 @@ public class Order : EntityBase<Guid>
     string sellerName,
     string buyerName,
     OrderAddress address,
-    OrderStatus status,
     PaymentType paymentType,
-    ShippingCompany shippingCompany)
+    ShippingCompany shippingCompany,
+    IEnumerable<OrderProduct> products)
     {
         Id = Guid.NewGuid();
         OrderNumber = GenerateOrderNumber();
@@ -37,6 +37,14 @@ public class Order : EntityBase<Guid>
         ShippingCompany = shippingCompany ?? throw new ArgumentNullException(nameof(shippingCompany));
         ShippingCompanyId = shippingCompany.Id;
         CreatedAt = DateTime.UtcNow;
+
+        if (products == null || !products.Any())
+            throw new ArgumentException("Order must contain at least one product.");
+
+        foreach (var product in products)
+        {
+            AddProduct(product);
+        }
     }
 
     public void UpdateOrderStatus(OrderStatus status)

@@ -1,22 +1,22 @@
-using OrderService.Domain.Common.Interfaces;
-using OrderService.Infrastructure.Eventing;
+using Microsoft.EntityFrameworkCore;
+using OrderService.Application.Extensions;
+using OrderService.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Services
+builder.Services.AddApplicationServices();
 
-// MediatR service registration.
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<IDomainEvent>());
-builder.Services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
+builder.Services.AddDbContext<OrderContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("OrderDb")));
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -24,9 +24,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
