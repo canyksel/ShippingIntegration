@@ -59,7 +59,7 @@ public class CreateOrderCommandHandler(
                 OrderId = order.Id,
                 OrderNumber = order.OrderNumber,
                 ShippingCompanyId = order.ShippingCompanyId,
-                Products = order.Products.Select(p => new ProductItem
+                Products = order.Products.Select(p => new OrderCreatedEvent.ProductItem
                 {
                     ProductId = p.ProductId,
                     Quantity = p.Quantity

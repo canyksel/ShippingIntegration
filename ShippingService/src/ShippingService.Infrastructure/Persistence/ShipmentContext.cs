@@ -1,23 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using OrderService.Domain.Common;
-using OrderService.Domain.Common.Interfaces;
-using OrderService.Domain.Entities;
+using ShippingService.Domain.Common;
+using ShippingService.Domain.Common.Interfaces;
+using ShippingService.Domain.Entities;
 
-namespace OrderService.Infrastructure.Persistence;
+namespace ShippingService.Infrastructure.Persistence;
 
-public class OrderContext(
-    DbContextOptions<OrderContext> options,
+public class ShipmentContext(
+    DbContextOptions<ShipmentContext> options,
     IDomainEventDispatcher domainEventDispatcher)
     : DbContext(options), IUnitOfWork
 {
-    public DbSet<Order> Orders { get; set; }
-    public DbSet<Product> Products { get; set; }
-    public DbSet<OrderAddress> OrderAddresses { get; set; }
-    public DbSet<CompanyAddress> CompanyAddresses { get; set; }
-    public DbSet<OrderProduct> OrderProducts { get; set; }
-    public DbSet<ShippingCompany> ShippingCompanies { get; set; }
-
+    public DbSet<Shipment> Shipments { get; set; }
     public async Task<IDbContextTransaction> BeginTransactionAsync()
     {
         return await Database.BeginTransactionAsync();

@@ -1,0 +1,32 @@
+﻿using MassTransit;
+using Microsoft.Extensions.DependencyInjection;
+using ShippingService.Application.Consumers;
+
+namespace ShippingService.Infrastructure.Messaging;
+
+public static class MassTransitExtensions
+{
+    public static IServiceCollection AddMessaging(this IServiceCollection services)
+    {
+        services.AddMassTransit(x =>
+        {
+            x.AddConsumer<OrderCreatedEventConsumer>();
+
+            x.UsingRabbitMq((context, cfg) =>
+            {
+                cfg.Host("localhost", "/", h =>
+                {
+                    h.Username("guest");
+                    h.Password("guest");
+                });
+
+                cfg.ReceiveEndpoint("order-created-event-queue", e =>
+                {
+                    e.ConfigureConsumer<OrderCreatedEventConsumer>(context);
+                });
+            });
+        });
+
+        return services;
+    }
+}

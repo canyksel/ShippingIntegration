@@ -1,4 +1,4 @@
-﻿namespace OrderService.Application.Orders.Events;
+﻿namespace ShippingService.Application.Contracts.Events;
 
 public class OrderCreatedEvent
 {

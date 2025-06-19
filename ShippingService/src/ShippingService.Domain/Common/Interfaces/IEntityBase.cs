@@ -1,4 +1,4 @@
-﻿namespace OrderService.Domain.Common.Interfaces;
+﻿namespace ShippingService.Domain.Common.Interfaces;
 
 public interface IEntityBase { }
 
