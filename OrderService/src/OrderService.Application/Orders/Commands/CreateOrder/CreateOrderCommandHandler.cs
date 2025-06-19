@@ -50,22 +50,7 @@ public class CreateOrderCommandHandler(
         }
 
         await orderRepository.AddAsync(order);
-        var isCommitted = await productRepository.UnitOfWork.SaveEntitesAsync(cancellationToken);
-
-        if(isCommitted)
-        {
-            await eventPublisher.PublishOrderCreatedAsync(new OrderCreatedEvent
-            {
-                OrderId = order.Id,
-                OrderNumber = order.OrderNumber,
-                ShippingCompanyId = order.ShippingCompanyId,
-                Products = order.Products.Select(p => new OrderCreatedEvent.ProductItem
-                {
-                    ProductId = p.ProductId,
-                    Quantity = p.Quantity
-                }).ToList()
-            });
-        }
+        await productRepository.UnitOfWork.SaveEntitesAsync(cancellationToken);
 
         return new CreateOrderResultDto
         {

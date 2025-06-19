@@ -1,6 +1,6 @@
-﻿namespace ShippingService.Application.Contracts.Events;
+﻿namespace OrderService.Application.Orders.Events;
 
-public class OrderCreatedEvent
+public class OrderPaidEvent
 {
     public Guid OrderId { get; set; }
     public string OrderNumber { get; set; }

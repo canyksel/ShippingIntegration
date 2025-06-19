@@ -5,8 +5,8 @@ namespace OrderService.Infrastructure.Messaging;
 
 public class EventPublisher(IPublishEndpoint publishEndpoint) : IEventPublisher
 {
-    public async Task PublishOrderCreatedAsync(OrderCreatedEvent evt)
+    public async Task PublishOrderPaidAsync(OrderPaidEvent @evente)
     {
-        await publishEndpoint.Publish(evt);
+        await publishEndpoint.Publish(@evente);
     }
 }

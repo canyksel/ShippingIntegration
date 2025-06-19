@@ -1,16 +1,15 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using ShippingService.Application.Common;
+using ShippingService.Application.Contracts.Events;
 using ShippingService.Domain.Enums;
 using ShippingService.Domain.Repositories.Shipment;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShippingService.Application.Shipments.Commands;
 
 public class UpdateShipmentStatusCommandHandler(
+    IShipmentCacheService shipmentCacheService,
+    IEventPublisher eventPublisher,
     IShipmentRepository shipmentRepository,
     ILogger<UpdateShipmentStatusCommandHandler> logger)
     : IRequestHandler<UpdateShipmentStatusCommand, UpdateShipmentStatusResultDto>
@@ -33,9 +32,11 @@ public class UpdateShipmentStatusCommandHandler(
                 throw new InvalidOperationException("Shipment is already prepared.");
             case ShipmentStatus.InTransit:
                 shipment.MoveToInTransit();
+                await shipmentCacheService.SetShipmentStatusAsync(request.OrderNumber, request.NewStatus.ToString());
                 break;
             case ShipmentStatus.Delivered:
                 shipment.MoveToDelivered();
+                await shipmentCacheService.SetShipmentStatusAsync(request.OrderNumber, request.NewStatus.ToString());
                 break;
             default:
                 throw new InvalidOperationException("Invalid status.");
@@ -43,6 +44,17 @@ public class UpdateShipmentStatusCommandHandler(
 
         shipmentRepository.Update(shipment);
         await shipmentRepository.UnitOfWork.SaveEntitesAsync(cancellationToken);
+
+        if (request.NewStatus == ShipmentStatus.Delivered)
+        {
+            await eventPublisher.PublishShipmentStatusChangedAsync(new ShipmentStatusChangedEvent
+            {
+                OrderNumber = shipment.OrderNumber,
+                NewStatus = "Delivered"
+            });
+
+            logger.LogInformation("Shipment Delivered Event published to OrderService");
+        }
 
         return new UpdateShipmentStatusResultDto
         {

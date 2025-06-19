@@ -2,5 +2,5 @@
 
 public interface IEventPublisher
 {
-    Task PublishOrderCreatedAsync(OrderCreatedEvent @event);
+    Task PublishOrderPaidAsync(OrderPaidEvent @event);
 }

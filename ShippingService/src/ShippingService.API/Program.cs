@@ -1,9 +1,16 @@
+using ShippingService.Application.Common;
 using ShippingService.Infrastructure.Messaging;
+using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddMessaging();
+
+builder.Services.AddSingleton<IConnectionMultiplexer>(
+    ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("redis-db")));
+
+builder.Services.AddScoped<IShipmentCacheService, ShipmentCacheService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
