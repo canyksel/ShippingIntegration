@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using OrderService.Application.Orders.Events;
 using OrderService.Domain.Entities;
 using OrderService.Domain.Repositories.Order;
 using OrderService.Domain.Repositories.Product;
@@ -7,6 +8,7 @@ using OrderService.Domain.Repositories.ShippingCompany;
 namespace OrderService.Application.Orders.Commands.CreateOrder;
 
 public class CreateOrderCommandHandler(
+    IEventPublisher eventPublisher,
     IOrderRepository orderRepository,
     IShippingCompanyRepository shippingCompanyRepository,
     IProductRepository productRepository) : IRequestHandler<CreateOrderCommand, CreateOrderResultDto>
@@ -48,7 +50,22 @@ public class CreateOrderCommandHandler(
         }
 
         await orderRepository.AddAsync(order);
-        await productRepository.UnitOfWork.SaveEntitesAsync(cancellationToken);
+        var isCommitted = await productRepository.UnitOfWork.SaveEntitesAsync(cancellationToken);
+
+        if(isCommitted)
+        {
+            await eventPublisher.PublishOrderCreatedAsync(new OrderCreatedEvent
+            {
+                OrderId = order.Id,
+                OrderNumber = order.OrderNumber,
+                ShippingCompanyId = order.ShippingCompanyId,
+                Products = order.Products.Select(p => new ProductItem
+                {
+                    ProductId = p.ProductId,
+                    Quantity = p.Quantity
+                }).ToList()
+            });
+        }
 
         return new CreateOrderResultDto
         {

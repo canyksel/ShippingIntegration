@@ -1,14 +1,22 @@
 using Microsoft.EntityFrameworkCore;
 using OrderService.Application.Extensions;
+using OrderService.Application.Orders.Events;
+using OrderService.Infrastructure.Messaging;
 using OrderService.Infrastructure.Persistence;
+using OrderService.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Services
 builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices();
 
 builder.Services.AddDbContext<OrderContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("OrderDb")));
+
+
+builder.Services.AddOrderServiceMessaging();
+builder.Services.AddScoped<IEventPublisher, EventPublisher>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

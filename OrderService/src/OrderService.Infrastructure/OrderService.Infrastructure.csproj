@@ -7,12 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MassTransit" Version="8.4.1" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.4.1" />
     <PackageReference Include="MediatR" Version="12.4.1" />
     <PackageReference Include="MediatR.Contracts" Version="2.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\OrderService.Domain\OrderService.Domain.csproj" />
+    <ProjectReference Include="..\OrderService.Application\OrderService.Application.csproj" />
   </ItemGroup>
 
 </Project>
