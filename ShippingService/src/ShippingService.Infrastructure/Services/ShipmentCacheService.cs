@@ -1,11 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Storage;
-using ShippingService.Application.Common;
+﻿using ShippingService.Application.Common;
 using StackExchange.Redis;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 public class ShipmentCacheService(IConnectionMultiplexer redis) : IShipmentCacheService
 {
