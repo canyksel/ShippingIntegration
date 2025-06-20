@@ -10,7 +10,7 @@ public class Order : EntityBase<Guid>
     public string BuyerName { get; private set; }
     public PaymentType PaymentType { get; private set; }
     public OrderStatus Status { get; private set; }
-
+    public Guid OrderAddressId { get; private set; }
     public virtual OrderAddress Address { get; private set; }
     public virtual ICollection<OrderProduct> Products { get; private set; }
 
@@ -32,6 +32,7 @@ public class Order : EntityBase<Guid>
         SellerName = sellerName ?? throw new ArgumentNullException(nameof(sellerName));
         BuyerName = buyerName ?? throw new ArgumentNullException(nameof(buyerName));
         Address = address ?? throw new ArgumentNullException(nameof(address));
+        OrderAddressId = address.Id;
         Status = OrderStatus.Pending;
         PaymentType = paymentType;
         ShippingCompany = shippingCompany ?? throw new ArgumentNullException(nameof(shippingCompany));

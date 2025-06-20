@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMessaging();
 
 builder.Services.AddSingleton<IConnectionMultiplexer>(
-    ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("redis-db")));
+    ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("Redis")));
 
 builder.Services.AddScoped<IShipmentCacheService, ShipmentCacheService>();
 

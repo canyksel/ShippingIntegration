@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using OrderService.Domain.Common;
 using OrderService.Domain.Common.Interfaces;
 using OrderService.Domain.Entities;
+using OrderService.Infrastructure.Persistence.Configuration;
 
 namespace OrderService.Infrastructure.Persistence;
 
@@ -55,5 +56,15 @@ public class OrderContext(
         }
 
         return true;
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfiguration(new CompanyAddressEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new OrderAddressEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new OrderEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new OrderProductEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new ProductEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new ShippingCompanyEntityTypeConfiguration());
     }
 }

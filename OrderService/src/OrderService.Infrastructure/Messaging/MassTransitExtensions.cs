@@ -1,5 +1,6 @@
 ﻿using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
+using OrderService.Application.Consumers;
 
 namespace OrderService.Infrastructure.Messaging;
 
@@ -9,12 +10,19 @@ public static class MassTransitExtensions
     {
         services.AddMassTransit(x =>
         {
+            x.AddConsumer<ShipmentStatusChangedEventConsumer>();
+
             x.UsingRabbitMq((context, cfg) =>
             {
                 cfg.Host("localhost", "/", h =>
                 {
                     h.Username("guest");
                     h.Password("guest");
+                });
+
+                cfg.ReceiveEndpoint("shipment-status-changed-event-queue", e =>
+                {
+                    e.ConfigureConsumer<ShipmentStatusChangedEventConsumer>(context);
                 });
             });
         });

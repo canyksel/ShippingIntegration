@@ -1,6 +1,8 @@
-﻿namespace OrderService.Domain.Entities;
+﻿using OrderService.Domain.Common;
 
-public class CompanyAddress
+namespace OrderService.Domain.Entities;
+
+public class CompanyAddress : EntityBase<Guid>
 {
     public string Country { get; private set; }
     public string City { get; private set; }
