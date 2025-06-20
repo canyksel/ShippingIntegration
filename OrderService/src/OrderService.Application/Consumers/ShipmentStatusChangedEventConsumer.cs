@@ -3,11 +3,6 @@ using Microsoft.Extensions.Logging;
 using OrderService.Application.Contracts.Events;
 using OrderService.Domain.Enums;
 using OrderService.Domain.Repositories.Order;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OrderService.Application.Consumers;
 

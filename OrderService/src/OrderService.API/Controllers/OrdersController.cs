@@ -7,7 +7,6 @@ using OrderService.Application.Orders.Queries.GetOrderByOrderNumber;
 
 namespace OrderService.API.Controllers;
 
-
 [ApiController]
 [Route("api/[controller]")]
 public class OrdersController(IMediator mediator) : ControllerBase
@@ -23,14 +22,14 @@ public class OrdersController(IMediator mediator) : ControllerBase
     [HttpGet("{orderNumber}")]
     public async Task<IActionResult> GetOrderByOrderNumber([FromRoute] string orderNumber, CancellationToken cancellationToken = default)
     {
-        var result = await mediator.Send(new GetOrderByOrderNumberQuery { OrderNumber = orderNumber});
+        var result = await mediator.Send(new GetOrderByOrderNumberQuery { OrderNumber = orderNumber });
         return result != null ? Ok(result) : NotFound();
     }
 
     [HttpPost("{orderNumber}/paid")]
     public async Task<IActionResult> PaidOrder([FromRoute] string orderNumber, CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(new PaidOrderCommand { OrderNumber = orderNumber}, cancellationToken);
+        var result = await mediator.Send(new PaidOrderCommand { OrderNumber = orderNumber }, cancellationToken);
         return result ? Ok() : BadRequest();
     }
 

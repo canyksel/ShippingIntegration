@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OrderService.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OrderService.Infrastructure.Persistence;
 
@@ -16,9 +11,21 @@ public static class SeedData
         {
             var companies = new List<ShippingCompany>
             {
-                new("Yurtiçi Kargo", "YURTICI", null, null),
-                new("Aras Kargo", "ARAS", null, null),
-                new("MNG Kargo", "MNG", null, null)
+                new(
+                    name: "Yurtiçi Kargo",
+                    code: "YURTICI",
+                    address: new CompanyAddress("Türkiye", "İstanbul", "Marmara", "34000", "Merkez", "Yurtiçi Kargo Genel Müdürlük")
+                ),
+                new(
+                    name: "Aras Kargo",
+                    code: "ARAS",
+                    address: new CompanyAddress("Türkiye", "Ankara", "İç Anadolu", "06000", "Merkez", "Aras Kargo Genel Müdürlük")
+                ),
+                new(
+                    name: "MNG Kargo",
+                    code: "MNG",
+                    address: new CompanyAddress("Türkiye", "İzmir", "Ege", "35000", "Merkez", "MNG Kargo Genel Müdürlük")
+                )
             };
             await context.ShippingCompanies.AddRangeAsync(companies);
         }
@@ -27,10 +34,10 @@ public static class SeedData
         {
             var products = new List<Product>
             {
-                new("Laptop", "Açıklama 4", "Monster", "Bilgisayar", 500),
-                new("Telefon", "Açıklama 1", "Apple", "Elektronik", 100),
-                new("Laptop", "Açıklama 2", "Lenovo", "Bilgisayar", 50),
-                new("Laptop", "Açıklama 3", "HP", "Bilgisayar", 50),
+                new("Laptop", "Açıklama 1", "Monster", "Bilgisayar", 500),
+                new("Telefon", "Açıklama 2", "Apple", "Elektronik", 100),
+                new("Laptop", "Açıklama 3", "Lenovo", "Bilgisayar", 50),
+                new("Laptop", "Açıklama 4", "HP", "Bilgisayar", 50),
             };
             await context.Products.AddRangeAsync(products);
         }

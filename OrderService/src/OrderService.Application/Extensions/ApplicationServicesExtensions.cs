@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using OrderService.Domain.Common.Interfaces;
 using System.Reflection;
 
 namespace OrderService.Application.Extensions;

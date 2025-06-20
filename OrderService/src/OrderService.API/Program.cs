@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using OrderService.Application.Extensions;
 using OrderService.Application.Orders.Events;
+using OrderService.Infrastructure.Extensions;
 using OrderService.Infrastructure.Messaging;
 using OrderService.Infrastructure.Persistence;
-using OrderService.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
