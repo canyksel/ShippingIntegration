@@ -8,11 +8,11 @@ using OrderService.Infrastructure.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 // Services
-builder.Services.AddApplicationServices();
-builder.Services.AddInfrastructureServices();
-
 builder.Services.AddDbContext<OrderContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("OrderDb")));
+
+builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices();
 
 
 builder.Services.AddOrderServiceMessaging();

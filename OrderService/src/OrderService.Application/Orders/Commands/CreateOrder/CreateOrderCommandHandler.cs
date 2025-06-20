@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using OrderService.Application.Orders.Events;
 using OrderService.Domain.Entities;
 using OrderService.Domain.Repositories.Order;
 using OrderService.Domain.Repositories.Product;
@@ -8,7 +7,6 @@ using OrderService.Domain.Repositories.ShippingCompany;
 namespace OrderService.Application.Orders.Commands.CreateOrder;
 
 public class CreateOrderCommandHandler(
-    IEventPublisher eventPublisher,
     IOrderRepository orderRepository,
     IShippingCompanyRepository shippingCompanyRepository,
     IProductRepository productRepository) : IRequestHandler<CreateOrderCommand, CreateOrderResultDto>
@@ -27,6 +25,8 @@ public class CreateOrderCommandHandler(
            request.Address.AddressDetail
        );
 
+        var order = new Order(request.SellerName, request.BuyerName, address, request.PaymentType, shippingCompany, new List<OrderProduct>());
+
         var orderProducts = new List<OrderProduct>();
         foreach (var item in request.Products)
         {
@@ -37,12 +37,11 @@ public class CreateOrderCommandHandler(
             if (product.Stock < item.Quantity)
                 throw new InvalidOperationException($"Not enough stock for product: {product.Name}");
 
-            product.DecreaseStock(item.Quantity); // stok düş
-            var orderProduct = new OrderProduct(null!, product, item.UnitPrice, item.Quantity);
-            orderProducts.Add(orderProduct);
-        }
+            product.DecreaseStock(item.Quantity);
 
-        Order order = new(request.SellerName, request.BuyerName, address, request.PaymentType, shippingCompany, orderProducts);
+            var orderProduct = new OrderProduct(order, product, item.UnitPrice, item.Quantity);
+            order.AddProduct(orderProduct);
+        }
 
         foreach (var item in orderProducts)
         {
@@ -50,7 +49,7 @@ public class CreateOrderCommandHandler(
         }
 
         await orderRepository.AddAsync(order);
-        await productRepository.UnitOfWork.SaveEntitesAsync(cancellationToken);
+        await orderRepository.UnitOfWork.SaveEntitesAsync(cancellationToken);
 
         return new CreateOrderResultDto
         {

@@ -10,14 +10,24 @@ public class ShippingCompanyEntityTypeConfiguration : IEntityTypeConfiguration<S
     {
         builder.ToTable("ShippingCompanies");
 
-        builder.HasKey(p => p.Id);
+        builder.HasKey(s => s.Id);
 
-        builder.Property(p => p.Name).HasMaxLength(100).IsRequired();
-        builder.Property(p => p.Code).HasMaxLength(10).IsRequired();
+        builder.Property(s => s.Name)
+               .IsRequired()
+               .HasMaxLength(100);
 
-        builder.HasOne<CompanyAddress>()
-              .WithMany()
-              .HasForeignKey("CompanyAddressId")
-              .OnDelete(DeleteBehavior.Restrict);
+        builder.Property(s => s.Code)
+               .IsRequired()
+               .HasMaxLength(50);
+
+        builder.Property(s => s.ShipmentDate);
+
+        builder.Property(s => s.CompanyAddressId)
+               .IsRequired();
+
+        builder.HasOne(s => s.Address)
+               .WithMany()
+               .HasForeignKey(s => s.CompanyAddressId)
+               .OnDelete(DeleteBehavior.Restrict);
     }
 }

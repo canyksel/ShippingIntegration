@@ -39,13 +39,17 @@ public class Order : EntityBase<Guid>
         ShippingCompanyId = shippingCompany.Id;
         CreatedAt = DateTime.UtcNow;
 
-        if (products == null || !products.Any())
-            throw new ArgumentException("Order must contain at least one product.");
+        Products = new List<OrderProduct>();
 
-        foreach (var product in products)
+        if (products is not null)
         {
-            AddProduct(product);
+            foreach (var product in products)
+            {
+                AddProduct(product);
+            }
+
         }
+
     }
 
     public void UpdateOrderStatus(OrderStatus status)

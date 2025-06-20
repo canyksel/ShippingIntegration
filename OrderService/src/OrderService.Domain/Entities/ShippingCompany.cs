@@ -18,6 +18,7 @@ public class ShippingCompany : EntityBase<Guid>
         Name = name;
         Code = code;
         Address = address;
+        CompanyAddressId = address.Id;
         ShipmentDate = shipmentDate;
         CreatedAt = DateTime.UtcNow;
     }
