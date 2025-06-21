@@ -22,5 +22,20 @@
 - Swagger – API dokümantasyonu
 - xUnit – Birim testler
 
+## Proje yapısı
+ShippingIntegration/
+├── OrderService/
+│   ├── API
+│   ├── Application
+│   ├── Domain
+│   └── Infrastructure
+├── ShippingService/
+│   ├── API
+│   ├── Application
+│   ├── Domain
+│   └── Infrastructure
+├── SharedKernel/
+├── docker-compose.yml
+
 ## Docker ile Servisleri Başlatma
 docker-compose up --build
