@@ -1,7 +1,7 @@
 # Shipping Integration Microservices (.NET 8)
 ## Proje Mimarisi
 ### 1. Order Service
-- Sipariş alma (POST /Orders)
+- Sipariş oluşturma (POST /Orders)
 - Sipariş için ödeme yapma (POST /Orders/{orderNumber}/paid)
 - Siparişi iptal etme (POST /Orders/{orderNumber}/cancel)
 - Sipariş detaylarını getirme (GET /Orders/{id})
