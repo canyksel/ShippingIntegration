@@ -21,7 +21,7 @@ public class CreateOrderCommandHandler(
                  request.Address.PostalCode, request.Address.AddressTitle, request.Address.AddressDetail);
 
         var order = new Order(request.SellerName, request.BuyerName, orderAddress, request.PaymentType, shippingCompany, new List<OrderProduct>());
-        orderAddress.SetOrderIformation(order);
+        orderAddress.SetOrderIdInformation(order.Id);
 
         var orderProducts = new List<OrderProduct>();
         foreach (var item in request.Products)
