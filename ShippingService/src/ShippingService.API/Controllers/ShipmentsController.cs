@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ShippingService.Application.Shipments.Commands;
 using ShippingService.Application.Shipments.Queries;
-using ShippingService.Domain.Enums;
 
 namespace ShippingService.API.Controllers;
 
@@ -10,15 +9,9 @@ namespace ShippingService.API.Controllers;
 [Route("api/[controller]")]
 public class ShipmentsController(IMediator mediator) : ControllerBase
 {
-    [HttpPost("{orderNumber}/update-status")]
-    public async Task<IActionResult> UpdateShipmentStatus([FromRoute] string orderNumber, [FromBody] ShipmentStatus newStatus, CancellationToken cancellationToken)
+    [HttpPost("update-order-status")]
+    public async Task<IActionResult> UpdateShipmentStatus([FromBody] UpdateShipmentStatusCommand command, CancellationToken cancellationToken)
     {
-        var command = new UpdateShipmentStatusCommand
-        {
-            OrderNumber = orderNumber,
-            NewStatus = newStatus
-        };
-
         var result = await mediator.Send(command, cancellationToken);
         return Ok(result);
     }

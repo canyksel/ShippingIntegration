@@ -35,10 +35,10 @@ public class OrderPaidEventConsumer(
             await eventPublisher.PublishShipmentStatusChangedAsync(new ShipmentStatusChangedEvent
             {
                 OrderNumber = message.OrderNumber,
-                NewStatus = "Shipped"
+                NewStatus = "Prepared"
             });
-            await shipmentCacheService.SetShipmentStatusAsync(message.OrderNumber, "Shipped");
-            logger.LogInformation("[ShippingService] Shipment created with status Shipped for OrderNumber={OrderNumber}", message.OrderNumber);
+            await shipmentCacheService.SetShipmentStatusAsync(message.OrderNumber, "Prepared");
+            logger.LogInformation("[ShippingService] Shipment created with status Prepared for OrderNumber={OrderNumber}", message.OrderNumber);
         }
     }
 }
