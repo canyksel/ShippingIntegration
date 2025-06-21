@@ -1,4 +1,4 @@
-﻿namespace OrderService.Application.Orders.Events
+﻿namespace SharedKernel.Contracts.Events
 {
     public class OrderPaidEvent
     {

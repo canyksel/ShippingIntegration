@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using OrderService.Application.Orders.Events;
 using OrderService.Domain.Enums;
 using OrderService.Domain.Repositories.Order;
+using SharedKernel.Contracts.Events;
 
 namespace OrderService.Application.Orders.Commands.PaidOrder;
 

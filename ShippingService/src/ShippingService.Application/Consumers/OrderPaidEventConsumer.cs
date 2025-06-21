@@ -1,7 +1,8 @@
 ﻿using MassTransit;
 using Microsoft.Extensions.Logging;
+using SharedKernel.Contracts.Events;
 using ShippingService.Application.Common;
-using ShippingService.Application.Contracts.Events;
+using ShippingService.Application.Events;
 using ShippingService.Domain.Entities;
 using ShippingService.Domain.Repositories.Shipment;
 

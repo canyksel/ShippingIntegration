@@ -1,5 +1,6 @@
 ﻿using MassTransit;
 using OrderService.Application.Orders.Events;
+using SharedKernel.Contracts.Events;
 
 namespace OrderService.Infrastructure.Messaging;
 

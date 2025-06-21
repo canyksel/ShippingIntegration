@@ -12,7 +12,7 @@ public class CancelOrderCommandHandler(
 {
     public async Task<bool> Handle(CancelOrderCommand request, CancellationToken cancellationToken)
     {
-        var order = await orderRepository.FirstOrDefaultAsync(o => o.OrderNumber == request.OrderNumber);
+        var order = await orderRepository.GetByOrderNumberWithDetailsAsync(request.OrderNumber);
         if (order == null)
         {
             logger.LogWarning("Order not found for cancellation. OrderNumber: {OrderNumber}", request.OrderNumber);
@@ -30,6 +30,6 @@ public class CancelOrderCommandHandler(
         var result = await orderRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         logger.LogInformation("Order cancelled successfully. OrderNumber: {OrderNumber}", request.OrderNumber);
-        return true;
+        return result > 0;
     }
 }

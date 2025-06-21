@@ -1,4 +1,6 @@
-﻿namespace ShippingService.Application.Contracts.Events;
+﻿using SharedKernel.Contracts.Events;
+
+namespace ShippingService.Application.Events;
 
 public interface IEventPublisher
 {

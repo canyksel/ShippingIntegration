@@ -11,8 +11,8 @@ public class OrderRepository(OrderContext context) : EfRepository<Order>(context
     public async Task<Order> GetByOrderNumberWithDetailsAsync(string orderNumber)
     {
         return await context.Orders.Include(o => o.Address)
-                                .Include(o => o.ShippingCompany)
-                                .Include(o => o.Products).ThenInclude(p => p.Product)
-                                .FirstOrDefaultAsync(o => o.OrderNumber == orderNumber);
+                                   .Include(o => o.ShippingCompany)
+                                   .Include(o => o.Products).ThenInclude(p => p.Product)
+                                   .FirstOrDefaultAsync(o => o.OrderNumber == orderNumber);
     }
 }

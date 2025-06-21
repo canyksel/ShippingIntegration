@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Moq;
 using ShippingService.Application.Common;
-using ShippingService.Application.Contracts.Events;
+using ShippingService.Application.Events;
 using ShippingService.Application.Shipments.Commands;
 using ShippingService.Domain.Entities;
 using ShippingService.Domain.Enums;

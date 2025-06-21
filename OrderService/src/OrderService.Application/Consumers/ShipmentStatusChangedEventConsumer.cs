@@ -1,8 +1,8 @@
 ﻿using MassTransit;
 using Microsoft.Extensions.Logging;
-using OrderService.Application.Contracts.Events;
 using OrderService.Domain.Enums;
 using OrderService.Domain.Repositories.Order;
+using SharedKernel.Contracts.Events;
 
 namespace OrderService.Application.Consumers;
 
