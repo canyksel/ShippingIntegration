@@ -3,11 +3,12 @@ using Microsoft.EntityFrameworkCore.Storage;
 using ShippingService.Domain.Common;
 using ShippingService.Domain.Common.Interfaces;
 using ShippingService.Domain.Entities;
+using ShippingService.Infrastructure.Persistence.Configuration;
 
 namespace ShippingService.Infrastructure.Persistence;
 
-public class ShipmentContext(
-    DbContextOptions<ShipmentContext> options,
+public class ShippingContext(
+    DbContextOptions<ShippingContext> options,
     IDomainEventDispatcher domainEventDispatcher)
     : DbContext(options), IUnitOfWork
 {
@@ -49,5 +50,10 @@ public class ShipmentContext(
         }
 
         return true;
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfiguration(new ShipmentEntityTypeConfiguration());
     }
 }

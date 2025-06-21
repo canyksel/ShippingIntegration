@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using OrderService.Application.Extensions;
-using OrderService.Application.Orders.Events;
 using OrderService.Infrastructure.Extensions;
 using OrderService.Infrastructure.Messaging;
 using OrderService.Infrastructure.Persistence;
@@ -14,9 +13,7 @@ builder.Services.AddDbContext<OrderContext>(options =>
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
 
-
 builder.Services.AddOrderServiceMessaging();
-builder.Services.AddScoped<IEventPublisher, EventPublisher>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

@@ -6,7 +6,7 @@ using ShippingService.Infrastructure.Repositories.Common;
 
 namespace ShippingService.Infrastructure.Repositories;
 
-public class ShipmentRepository(ShipmentContext context) : EfRepository<Shipment>(context), IShipmentRepository
+public class ShipmentRepository(ShippingContext context) : EfRepository<Shipment>(context), IShipmentRepository
 {
     public async Task<Shipment?> GetByOrderIdAsync(Guid orderId)
     {

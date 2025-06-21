@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 
 namespace ShippingService.Infrastructure.Repositories.Common;
 
-public class EfRepository<T>(ShipmentContext context) : IRepository<T> where T : class
+public class EfRepository<T>(ShippingContext context) : IRepository<T> where T : class
 {
-    protected readonly ShipmentContext _context = context ?? throw new ArgumentNullException(nameof(context));
+    protected readonly ShippingContext _context = context ?? throw new ArgumentNullException(nameof(context));
     public IUnitOfWork UnitOfWork => _context;
 
     public async Task<T> GetByIdAsync(Guid id)

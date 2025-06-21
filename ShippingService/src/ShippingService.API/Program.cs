@@ -1,25 +1,32 @@
-using ShippingService.Application.Common;
+using Microsoft.EntityFrameworkCore;
+using ShippingService.Infrastructure.Extensions;
 using ShippingService.Infrastructure.Messaging;
+using ShippingService.Infrastructure.Persistence;
+using ShippingService.Application.Extensions;
 using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddMessaging();
+// Services
+builder.Services.AddDbContext<ShippingContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("ShippingDb")));
 
 builder.Services.AddSingleton<IConnectionMultiplexer>(
     ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("Redis")));
 
-builder.Services.AddScoped<IShipmentCacheService, ShipmentCacheService>();
+builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices();
+
+builder.Services.AddShipmentServiceMessaging();
+
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -27,9 +34,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

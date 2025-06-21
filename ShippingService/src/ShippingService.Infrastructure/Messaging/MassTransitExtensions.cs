@@ -6,7 +6,7 @@ namespace ShippingService.Infrastructure.Messaging;
 
 public static class MassTransitExtensions
 {
-    public static IServiceCollection AddMessaging(this IServiceCollection services)
+    public static IServiceCollection AddShipmentServiceMessaging(this IServiceCollection services)
     {
         services.AddMassTransit(x =>
         {
