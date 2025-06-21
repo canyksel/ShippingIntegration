@@ -18,5 +18,10 @@ public class OrderAddressEntityTypeConfiguration : IEntityTypeConfiguration<Orde
         builder.Property(p => p.PostalCode).HasMaxLength(20).IsRequired();
         builder.Property(p => p.AddressTitle).HasMaxLength(100).IsRequired();
         builder.Property(p => p.AddressDetail).HasMaxLength(250).IsRequired();
+
+        builder.HasOne(p => p.Order)
+             .WithOne(o => o.Address)
+             .HasForeignKey<OrderAddress>(p => p.OrderId)
+             .OnDelete(DeleteBehavior.Cascade);
     }
 }

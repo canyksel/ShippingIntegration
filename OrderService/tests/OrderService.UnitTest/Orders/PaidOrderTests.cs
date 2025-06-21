@@ -24,7 +24,7 @@ public class PaidOrderTests
             new List<OrderProduct>());
 
         var mockOrderRepo = new Mock<IOrderRepository>();
-        mockOrderRepo.Setup(r => r.FirstOrDefaultAsync(It.IsAny<System.Linq.Expressions.Expression<Func<Order, bool>>>()))
+        mockOrderRepo.Setup(r => r.GetByOrderNumberWithDetailsAsync(order.OrderNumber))
                      .ReturnsAsync(order);
         mockOrderRepo.Setup(r => r.UnitOfWork.SaveEntitesAsync(It.IsAny<CancellationToken>()))
                      .ReturnsAsync(true);
@@ -36,7 +36,7 @@ public class PaidOrderTests
 
         var result = await handler.Handle(new PaidOrderCommand { OrderNumber = order.OrderNumber }, CancellationToken.None);
 
-        Assert.True(result);
+        Assert.NotNull(result.OrderNumber);
         mockEventPublisher.Verify(e => e.PublishOrderPaidAsync(It.IsAny<OrderPaidEvent>()), Times.Once);
     }
 
@@ -77,11 +77,11 @@ public class PaidOrderTests
         var statusField = typeof(Order).GetProperty("Status", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
         statusField!.SetValue(order, OrderStatus.Shipped);
 
-        var handler = new PaidOrderCommandHandler(mockOrderRepo.Object, mockPublisher.Object, mockLogger.Object);
-        var command = new PaidOrderCommand { OrderNumber = "ORD-123", };
-
-        mockOrderRepo.Setup(r => r.FirstOrDefaultAsync(It.IsAny<Expression<Func<Order, bool>>>()))
+        mockOrderRepo.Setup(r => r.GetByOrderNumberWithDetailsAsync(order.OrderNumber))
                      .ReturnsAsync(order);
+
+        var handler = new PaidOrderCommandHandler(mockOrderRepo.Object, mockPublisher.Object, mockLogger.Object);
+        var command = new PaidOrderCommand { OrderNumber = order.OrderNumber };
 
         await Assert.ThrowsAsync<InvalidOperationException>(() => handler.Handle(command, CancellationToken.None));
 

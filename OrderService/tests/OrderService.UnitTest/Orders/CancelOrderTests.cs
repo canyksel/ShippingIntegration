@@ -17,17 +17,17 @@ public class CancelOrderTests
         var mockOrderRepository = new Mock<IOrderRepository>();
         var mockLogger = new Mock<ILogger<CancelOrderCommandHandler>>();
 
-        var order = new Mock<Order>();
+        var mockOrder = new Mock<Order>();
 
-        mockOrderRepository.Setup(r => r.FirstOrDefaultAsync(It.IsAny<Expression<Func<Order, bool>>>()))
-                           .ReturnsAsync(order.Object);
+        mockOrderRepository.Setup(r => r.GetByOrderNumberWithDetailsAsync(mockOrder.Object.OrderNumber))
+                           .ReturnsAsync(mockOrder.Object);
 
         mockOrderRepository.Setup(r => r.UnitOfWork.SaveChangesAsync(It.IsAny<CancellationToken>()))
                            .ReturnsAsync(1);
 
         var handler = new CancelOrderCommandHandler(mockOrderRepository.Object, mockLogger.Object);
 
-        var result = await handler.Handle(new CancelOrderCommand { OrderNumber = order.Object.OrderNumber }, default);
+        var result = await handler.Handle(new CancelOrderCommand { OrderNumber = mockOrder.Object.OrderNumber }, default);
 
         result.Equals(1);
         mockOrderRepository.Verify(r => r.Update(It.Is<Order>(o => o.Status == OrderStatus.Cancelled)), Times.Once);

@@ -17,16 +17,11 @@ public class CreateOrderCommandHandler(
         var shippingCompany = await shippingCompanyRepository.GetByIdAsync(request.ShippingCompanyId) ??
             throw new InvalidOperationException("Shipping company not found.");
 
-        var address = new OrderAddress(
-           request.Address.Country,
-           request.Address.City,
-           request.Address.State,
-           request.Address.PostalCode,
-           request.Address.AddressTitle,
-           request.Address.AddressDetail
-       );
+        var orderAddress = new OrderAddress(request.Address.Country, request.Address.City, request.Address.State,
+                 request.Address.PostalCode, request.Address.AddressTitle, request.Address.AddressDetail);
 
-        var order = new Order(request.SellerName, request.BuyerName, address, request.PaymentType, shippingCompany, new List<OrderProduct>());
+        var order = new Order(request.SellerName, request.BuyerName, orderAddress, request.PaymentType, shippingCompany, new List<OrderProduct>());
+        orderAddress.SetOrderIformation(order);
 
         var orderProducts = new List<OrderProduct>();
         foreach (var item in request.Products)

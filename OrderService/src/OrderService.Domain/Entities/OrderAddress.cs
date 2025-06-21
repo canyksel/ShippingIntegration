@@ -5,6 +5,7 @@ namespace OrderService.Domain.Entities;
 public class OrderAddress : EntityBase<Guid>
 {
     public Guid OrderId { get; private set; }
+    public virtual Order Order { get; private set; }
     public string Country { get; private set; }
     public string City { get; private set; }
     public string State { get; private set; }
@@ -29,5 +30,11 @@ public class OrderAddress : EntityBase<Guid>
         PostalCode = postalCode ?? throw new ArgumentNullException(nameof(postalCode));
         AddressTitle = addressTitle ?? throw new ArgumentNullException(nameof(addressTitle));
         AddressDetail = addressDetail ?? throw new ArgumentNullException(nameof(addressDetail));
+    }
+
+    public void SetOrderIformation(Order order)
+    {
+        Order = order ?? throw new ArgumentNullException(nameof(order));
+        OrderId = order.Id;
     }
 }
