@@ -16,7 +16,7 @@ OrderService.API
 - Shipping service kargo sürecini yönetir: Prepared → InTransit → Delivered
 - Sipariş durumlarını Redis’e yazar.
 - PostgreSQL veritabanına kayıt eder.
-- Kargo durumunu güncellemek için (POST /Shipments/{orderNumber}/update-status)
+- Kargo durumunu güncellemek için (POST /Shipments//update-order-status)
 - Kargo durumunu takip etmek için (GET /Shipments/track/{orderNumber})
 
 ShippingService.API
