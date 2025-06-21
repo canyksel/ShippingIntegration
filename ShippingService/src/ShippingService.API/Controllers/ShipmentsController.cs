@@ -11,7 +11,7 @@ namespace ShippingService.API.Controllers;
 public class ShipmentsController(IMediator mediator) : ControllerBase
 {
     [HttpPost("{orderNumber}/update-status")]
-    public async Task<IActionResult> UpdateShipmentStatus([FromRoute] string orderNumber, [FromBody] ShipmentStatus newStatus,CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateShipmentStatus([FromRoute] string orderNumber, [FromBody] ShipmentStatus newStatus, CancellationToken cancellationToken)
     {
         var command = new UpdateShipmentStatusCommand
         {

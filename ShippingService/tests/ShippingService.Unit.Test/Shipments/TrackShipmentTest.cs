@@ -2,11 +2,6 @@
 using Moq;
 using ShippingService.Application.Common;
 using ShippingService.Application.Shipments.Queries;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShippingService.Unit.Test.Shipments;
 

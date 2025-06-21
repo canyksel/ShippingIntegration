@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using ShippingService.Application.Extensions;
 using ShippingService.Infrastructure.Extensions;
 using ShippingService.Infrastructure.Messaging;
 using ShippingService.Infrastructure.Persistence;
-using ShippingService.Application.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

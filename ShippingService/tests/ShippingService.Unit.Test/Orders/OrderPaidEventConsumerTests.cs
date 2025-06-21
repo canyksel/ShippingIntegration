@@ -5,14 +5,8 @@ using SharedKernel.Contracts.Events;
 using ShippingService.Application.Common;
 using ShippingService.Application.Consumers;
 using ShippingService.Application.Events;
-using ShippingService.Application.Shipments.Queries;
 using ShippingService.Domain.Entities;
 using ShippingService.Domain.Repositories.Shipment;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShippingService.Unit.Test.Orders;
 

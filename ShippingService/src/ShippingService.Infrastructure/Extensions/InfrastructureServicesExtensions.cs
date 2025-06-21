@@ -1,12 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ShippingService.Application.Common;
-using ShippingService.Domain.Repositories.Shipment;
-using ShippingService.Infrastructure.Repositories;
-using ShippingService.Infrastructure.Eventing;
-using ShippingService.Domain.Common.Interfaces;
-using ShippingService.Infrastructure.Messaging;
-using ShippingService.Infrastructure.Repositories.Common;
 using ShippingService.Application.Events;
+using ShippingService.Domain.Common.Interfaces;
+using ShippingService.Domain.Repositories.Shipment;
+using ShippingService.Infrastructure.Eventing;
+using ShippingService.Infrastructure.Messaging;
+using ShippingService.Infrastructure.Repositories;
+using ShippingService.Infrastructure.Repositories.Common;
 
 namespace ShippingService.Infrastructure.Extensions;
 
