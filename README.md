@@ -17,7 +17,7 @@ OrderService.API
 - Sipariş durumlarını Redis’e yazar.
 - PostgreSQL veritabanına kayıt eder.
 - Kargo durumunu güncellemek için (POST /Shipments/{orderNumber}/update-status)
-- Kargo durumunu takip etmek için (GET /Shipments/track/{trackingId})
+- Kargo durumunu takip etmek için (GET /Shipments/track/{orderNumber})
 
 ShippingService.API
 ![image](https://github.com/user-attachments/assets/8e3f76ba-4b68-4714-af58-882027c2eddc)
