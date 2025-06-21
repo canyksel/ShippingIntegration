@@ -30,7 +30,7 @@ public class OrdersController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> PaidOrder([FromRoute] string orderNumber, CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new PaidOrderCommand { OrderNumber = orderNumber }, cancellationToken);
-        return result ? Ok() : BadRequest();
+        return result != null ? Ok(result) : BadRequest();
     }
 
     [HttpPost("{orderNumber}/cancel")]
