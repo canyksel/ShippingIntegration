@@ -14,7 +14,7 @@ public class PaidOrderCommandHandler(
 {
     public async Task<bool> Handle(PaidOrderCommand request, CancellationToken cancellationToken)
     {
-        var order = await orderRepository.FirstOrDefaultAsync(o => o.OrderNumber == request.OrderNumber);
+        var order = await orderRepository.GetByOrderNumberWithDetailsAsync(request.OrderNumber);
         if (order == null)
         {
             logger.LogWarning("Order not found for OrderNumber: {OrderNumber}", request.OrderNumber);
