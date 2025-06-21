@@ -6,7 +6,7 @@
 - Siparişi iptal etme (POST /Orders/{orderNumber}/cancel)
 - Sipariş detaylarını getirme (GET /Orders/{id})
 - Siparişi oluşturduktan sonra `OrderPaidEvent` ile Shipping Service'e haber verir.
-- Sipariş bilgilerini PostgreSQL veritabanında saklanır.
+- Sipariş bilgileri PostgreSQL veritabanında saklanır.
 
 OrderService.API
 ![image](https://github.com/user-attachments/assets/aebc628e-225e-4d65-98eb-ddbf611c0c24)
