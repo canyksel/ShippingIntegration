@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using MassTransit.Transports;
+using Microsoft.Extensions.Logging;
 using Moq;
 using OrderService.Application.Orders.Commands.CancelOrder;
 using OrderService.Domain.Entities;
@@ -18,6 +19,10 @@ public class CancelOrderTests
         var mockLogger = new Mock<ILogger<CancelOrderCommandHandler>>();
 
         var mockOrder = new Mock<Order>();
+
+        var statusField = typeof(Order).GetProperty("Status", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+        statusField!.SetValue(mockOrder.Object, OrderStatus.Pending);
+
 
         mockOrderRepository.Setup(r => r.GetByOrderNumberWithDetailsAsync(mockOrder.Object.OrderNumber))
                            .ReturnsAsync(mockOrder.Object);

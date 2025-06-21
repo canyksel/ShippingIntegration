@@ -19,10 +19,10 @@ public class CancelOrderCommandHandler(
             throw new InvalidOperationException("Order not found.");
         }
 
-        if (order.Status is OrderStatus.Shipped or OrderStatus.Delivered)
+        if (order.Status is not OrderStatus.Pending || (order.Status is OrderStatus.Paid && ((DateTime.UtcNow - order.CreatedAt) > TimeSpan.FromMinutes(30))))
         {
-            logger.LogWarning("Cannot cancel an order that is already shipped or delivered. OrderNumber: {OrderNumber}", request.OrderNumber);
-            throw new InvalidOperationException("Order cannot be cancelled after shipment.");
+            logger.LogWarning("Cannot cancel an order. OrderNumber: {OrderNumber}", request.OrderNumber);
+            throw new InvalidOperationException("Order cannot be cancelled at this situation.");
         }
 
         order.UpdateOrderStatus(OrderStatus.Cancelled);

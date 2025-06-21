@@ -52,9 +52,9 @@ public class OrderPaidEventConsumerTests
         mockShipmentRepository.Verify(r => r.UnitOfWork.SaveEntitesAsync(It.IsAny<CancellationToken>()), Times.Once);
         mockPublisher.Verify(p => p.PublishShipmentStatusChangedAsync(It.Is<ShipmentStatusChangedEvent>(e =>
             e.OrderNumber == message.OrderNumber &&
-            e.NewStatus == "Shipped")), Times.Once);
+            e.NewStatus == "Prepared")), Times.Once);
 
-        mockCacheService.Verify(c => c.SetShipmentStatusAsync(message.OrderNumber, "Shipped"), Times.Once);
+        mockCacheService.Verify(c => c.SetShipmentStatusAsync(message.OrderNumber, "Prepared"), Times.Once);
 
         mockLogger.Verify(l => l.Log(
             LogLevel.Information,
