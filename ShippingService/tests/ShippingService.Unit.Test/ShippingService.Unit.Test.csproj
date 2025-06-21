@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\SharedKernel.Contracts\SharedKernel.Contracts.csproj" />
     <ProjectReference Include="..\..\src\ShippingService.Application\ShippingService.Application.csproj" />
     <ProjectReference Include="..\..\src\ShippingService.Domain\ShippingService.Domain.csproj" />
   </ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using OrderService.Application.Extensions;
 using OrderService.Domain.Entities;
 using OrderService.Domain.Repositories.Order;
 using OrderService.Domain.Repositories.Product;
@@ -54,7 +55,9 @@ public class CreateOrderCommandHandler(
         return new CreateOrderResultDto
         {
             OrderId = order.Id,
-            OrderNumber = order.OrderNumber
+            OrderNumber = order.OrderNumber,
+            OrderStatus = order.Status.GetDescription(),
+            PaymentType = order.PaymentType.GetDescription(),
         };
     }
 }

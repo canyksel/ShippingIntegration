@@ -5,6 +5,7 @@ using OrderService.Application.Orders.Events;
 using OrderService.Domain.Entities;
 using OrderService.Domain.Enums;
 using OrderService.Domain.Repositories.Order;
+using SharedKernel.Contracts.Events;
 using System.Linq.Expressions;
 using System.Reflection;
 

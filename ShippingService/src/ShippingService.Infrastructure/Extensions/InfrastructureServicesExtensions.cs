@@ -4,9 +4,9 @@ using ShippingService.Domain.Repositories.Shipment;
 using ShippingService.Infrastructure.Repositories;
 using ShippingService.Infrastructure.Eventing;
 using ShippingService.Domain.Common.Interfaces;
-using ShippingService.Application.Contracts.Events;
 using ShippingService.Infrastructure.Messaging;
 using ShippingService.Infrastructure.Repositories.Common;
+using ShippingService.Application.Events;
 
 namespace ShippingService.Infrastructure.Extensions;
 

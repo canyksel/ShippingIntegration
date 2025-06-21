@@ -1,4 +1,6 @@
-﻿namespace OrderService.Application.Orders.Events;
+﻿using SharedKernel.Contracts.Events;
+
+namespace OrderService.Application.Orders.Events;
 
 public interface IEventPublisher
 {

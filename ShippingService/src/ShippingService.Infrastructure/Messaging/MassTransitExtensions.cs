@@ -14,7 +14,8 @@ public static class MassTransitExtensions
 
             x.UsingRabbitMq((context, cfg) =>
             {
-                cfg.Host("localhost", "/", h =>
+                // docker için host: rabbitmq olmalı, local için host: localhost
+                cfg.Host("rabbitmq", "/", h =>
                 {
                     h.Username("guest");
                     h.Password("guest");

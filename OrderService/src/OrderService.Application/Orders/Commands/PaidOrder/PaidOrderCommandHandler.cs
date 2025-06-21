@@ -1,8 +1,11 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using OrderService.Application.Extensions;
+using OrderService.Application.Orders.Commands.CreateOrder;
 using OrderService.Application.Orders.Events;
 using OrderService.Domain.Enums;
 using OrderService.Domain.Repositories.Order;
+using SharedKernel.Contracts.Events;
 
 namespace OrderService.Application.Orders.Commands.PaidOrder;
 
@@ -10,11 +13,11 @@ public class PaidOrderCommandHandler(
     IOrderRepository orderRepository,
     IEventPublisher eventPublisher,
     ILogger<PaidOrderCommandHandler> logger)
-    : IRequestHandler<PaidOrderCommand, bool>
+    : IRequestHandler<PaidOrderCommand, PaidOrderDto>
 {
-    public async Task<bool> Handle(PaidOrderCommand request, CancellationToken cancellationToken)
+    public async Task<PaidOrderDto> Handle(PaidOrderCommand request, CancellationToken cancellationToken)
     {
-        var order = await orderRepository.FirstOrDefaultAsync(o => o.OrderNumber == request.OrderNumber);
+        var order = await orderRepository.GetByOrderNumberWithDetailsAsync(request.OrderNumber);
         if (order == null)
         {
             logger.LogWarning("Order not found for OrderNumber: {OrderNumber}", request.OrderNumber);
@@ -48,6 +51,11 @@ public class PaidOrderCommandHandler(
             });
         }
 
-        return true;
+        return new PaidOrderDto
+        {
+            OrderNumber = order.OrderNumber,
+            OrderStatus = order.Status.GetDescription(),
+            PaymentType = order.PaymentType.GetDescription(),
+        };
     }
 }

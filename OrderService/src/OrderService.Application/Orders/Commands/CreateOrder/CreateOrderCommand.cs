@@ -17,4 +17,6 @@ public class CreateOrderResultDto
 {
     public Guid OrderId { get; set; }
     public string OrderNumber { get; set; }
+    public string PaymentType { get; set; }
+    public string OrderStatus { get; set; }
 }

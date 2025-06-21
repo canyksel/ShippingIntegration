@@ -1,5 +1,6 @@
 ﻿using MassTransit;
-using ShippingService.Application.Contracts.Events;
+using SharedKernel.Contracts.Events;
+using ShippingService.Application.Events;
 
 namespace ShippingService.Infrastructure.Messaging;
 
