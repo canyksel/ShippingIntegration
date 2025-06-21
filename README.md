@@ -23,19 +23,8 @@
 - xUnit – Birim testler
 
 ## Proje yapısı
-ShippingIntegration/
-├── OrderService/
-│   ├── API
-│   ├── Application
-│   ├── Domain
-│   └── Infrastructure
-├── ShippingService/
-│   ├── API
-│   ├── Application
-│   ├── Domain
-│   └── Infrastructure
-├── SharedKernel/
-├── docker-compose.yml
+![image](https://github.com/user-attachments/assets/49d8f00a-8f84-4e86-a7a7-4fa46ea9c09f)
+
 
 ## Docker ile Servisleri Başlatma
 docker-compose up --build
