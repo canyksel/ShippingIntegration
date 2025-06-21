@@ -3,7 +3,6 @@ using ShippingService.Infrastructure.Extensions;
 using ShippingService.Infrastructure.Messaging;
 using ShippingService.Infrastructure.Persistence;
 using ShippingService.Application.Extensions;
-using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,8 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ShippingContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("ShippingDb")));
 
-builder.Services.AddSingleton<IConnectionMultiplexer>(
-    ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("Redis")));
+builder.Services.RegisterRedisService(builder.Configuration);
 
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
