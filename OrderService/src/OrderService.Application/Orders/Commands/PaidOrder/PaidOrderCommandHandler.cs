@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using OrderService.Application.Extensions;
-using OrderService.Application.Orders.Commands.CreateOrder;
 using OrderService.Application.Orders.Events;
 using OrderService.Domain.Enums;
 using OrderService.Domain.Repositories.Order;
